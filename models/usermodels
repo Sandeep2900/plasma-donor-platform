@@ -1,0 +1,87 @@
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  role: {
+    type: String,
+    required: [true, 'Role is required'],
+    enum: ['admin', 'donar', 'organization', 'hospital'],
+  },
+  name: {
+    type: String,
+    required: function () {
+      return this.role === 'admin' || this.role === 'donar';
+    },
+    validate: {
+      validator: function (value) {
+        return value && value.length > 0;
+      },
+      message: 'Name is required for users and admins',
+    },
+  },
+  organization: {
+    type: String,
+    required: function () {
+      return this.role === 'organization';
+    },
+    validate: {
+      validator: function (value) {
+        if (this.role === 'organization') {
+          return value && value.length > 0;
+        }
+        return true;
+      },
+      message: 'Organization name is required for organizations',
+    },
+  },
+  hospitalname: {
+    type: String,
+    required: function () {
+      return this.role === 'hospital';
+    },
+    validate: {
+      validator: function (value) {
+        if (this.role === 'hospital') {
+          return value && value.length > 0;
+        }
+        return true;
+      },
+      message: 'Hospital name is required for hospitals',
+    },
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    validate: {
+      validator: function (value) {
+        return value && value.length >= 8;
+      },
+      message: 'Password must be at least 8 characters',
+    },
+  },
+  website: {
+    type: String,
+  },
+  address: {
+    type: String,
+    required: [true, 'Address is required'],
+  },
+  phone: {
+    type: String,
+    required: [true, 'Phone number is required'],
+    validate: {
+      validator: function (value) {
+        return /^\d{10}$/.test(value); // Ensure it's a valid 10-digit phone number
+      },
+      message: 'Invalid phone number',
+    },
+  },
+  
+  
+}, { timestamps: true });
+
+module.exports = mongoose.model('users', userSchema);

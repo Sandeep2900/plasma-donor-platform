@@ -1,0 +1,26 @@
+{
+  "name": "plasma-donor-platform",
+  "version": "1.0.0",
+  "description": "mern plasma donor platform application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js",
+    "client":"npm start --prefix ./client",
+    "dev":"concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Harsh",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "concurrently": "^9.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.6.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.4"
+  }
+}
